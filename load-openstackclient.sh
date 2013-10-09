@@ -1,7 +1,7 @@
 #!/bin/bash
 
 apt-get -y update
-apt-get -y install curl build-essential libxml2-dev libxslt-dev git zlib1g-dev libssl-dev
+apt-get -y install curl build-essential libxml2-dev libxslt-dev git zlib1g-dev libssl-dev subversion
 apt-get -y install linux-headers-generic linux-image-extra-`uname -r`
 apt-get -y install python openssh-server python-dev
 
@@ -79,15 +79,16 @@ cat <<EOF > /etc/motd.tail
  Ruby: fog, rumm
 
  RUN THIS COMMAND TO START: source openstackrc
-
 EOF
 
 #
 # Install VBoxLinuxAdditions
 #
+apt-get -y update
+apt-get -y install dkms
+/etc/init.d/vboxadd setup
 mount -o loop,ro /root/VBoxGuestAdditions.iso /mnt
 /mnt/VBoxLinuxAdditions.run
-/etc/init.d/vboxadd setup
 
 #
 # added to mimic vagrant functionality on standard vboxes
