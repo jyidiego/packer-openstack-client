@@ -68,8 +68,6 @@ SUDO
 # Create message of the day file
 #
 cat <<EOF > /etc/motd.tail
-Welcome to Ubuntu 13.04 (GNU/Linux 3.8.0-30-generic x86_64)
-
  Rackspace Public Cloud/Openstack Automation Platform
 
  This platform comes with the following SDK
