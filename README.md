@@ -21,9 +21,11 @@ stdin: is not a tty
 /sbin/mount.vboxsf: mounting failed with the error: No such device
 
 Simply run the following command:
+
 /etc/init.d/vboxadd setup
 
 then run:
+
 sync;sync;poweroff
 
 Once you do that run "vagrant up" again. This apparently is caused by a bug in virtualbox that has yet to be resolved:
