@@ -4,6 +4,8 @@ vagrant-openstack-client
 Rackspace Cloud/Openstack Platform with python/ruby openstack clients, ansible, and docker installed.
 
 When you first do a "vagrant up" you're likely to get an error like this:
+
+
 The following SSH command responded with a non-zero exit status.
 Vagrant assumes that this means the command failed!
 
