@@ -1,0 +1,39 @@
+{
+    "builders": [
+        {
+            "type": "virtualbox",
+            "vm_name" : "openstack-client",
+            "name" : "RC1",
+            "guest_os_type": "Ubuntu_64",
+            "disk_size" : 20000,
+            "iso_url": "http://releases.ubuntu.com/raring/ubuntu-13.04-server-amd64.iso",
+            "iso_checksum": "7d335ca541fc4945b674459cde7bffb9",
+            "iso_checksum_type": "md5",
+            "ssh_username": "root",
+            "ssh_key_path" : "/Users/john6735/Box/Development/vagrant/keys/vagrant",
+            "ssh_password" : "r@ckersdem0",
+            "ssh_wait_timeout": "30m",
+            "shutdown_command": "shutdown -P now",
+            "http_directory" : "/Users/john6735/Box/sandbox/packer-openstack-client/http_directory",
+            "boot_command" : [
+                "<esc><esc><enter><wait>",
+                "/install/vmlinuz noapic ",
+                "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
+                "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
+                "hostname={{ .Name }} ",
+                "fb=false debconf/frontend=noninteractive ",
+                "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
+                "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
+                "initrd=/install/initrd.gz -- <enter>"
+            ],
+            "vboxmanage": [
+                ["modifyvm", "{{.Name}}", "--memory", "1024"]
+            ]
+        }
+    ],
+    "provisioners": [
+        { "type" : "shell",
+          "script" : "/Users/john6735/Box/sandbox/packer-openstack-client/load-openstackclient.sh" }
+    ],
+    "post-processors": ["vagrant"]
+}
