@@ -3,7 +3,7 @@
 apt-get -y update
 apt-get -y install curl build-essential libxml2-dev libxslt-dev git zlib1g-dev libssl-dev subversion
 apt-get -y install linux-headers-generic linux-image-extra-`uname -r`
-apt-get -y install python openssh-server python-dev
+apt-get -y install python openssh-server python-dev software-properties-common
 
 #
 # Setup ssh keys for root
@@ -70,11 +70,11 @@ SUDO
 cat <<EOF > /etc/motd.tail
  Rackspace Public Cloud/Openstack Automation Platform
 
- This platform comes with the following SDK
+ This platform comes with the following Openstack SDKs
  and command line utilities:
 
- Version Control Tools: git and subversion
- Automation Tools: ansible, chef-client, chef-solo, docker
+ Version Control Tools: git, subversion
+ Automation Tools: ansible, chef-client, chef-solo, juju
  Python: pyrax, nova, swift, clb, heat, keystone, and cinder
  Ruby: fog, rumm
 
@@ -86,7 +86,6 @@ EOF
 #
 apt-get -y update
 apt-get -y install dkms
-/etc/init.d/vboxadd setup
 mount -o loop,ro /root/VBoxGuestAdditions.iso /mnt
 /mnt/VBoxLinuxAdditions.run
 
@@ -131,14 +130,21 @@ rm -rf /root/.ssh
 
 # Add the Docker repository key to your local keychain
 # using apt-key finger you can check the fingerprint matches 36A1 D786 9245 C895 0F96 6E92 D857 6A8B A88D 21E9
-curl https://get.docker.io/gpg | apt-key add -
+# curl https://get.docker.io/gpg | apt-key add -
 
 # Add the Docker repository to your apt sources list.
-echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
+# echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list
 
 # install
+# apt-get -y update
+# apt-get -y install lxc-docker
+
+#
+# Setup juju
+#
+add-apt-repository -y ppa:juju/stable
 apt-get -y update
-apt-get -y install lxc-docker
+apt-get -y install juju-core
 
 
 #
@@ -160,6 +166,7 @@ export OS_AUTH_URL=https://identity.api.rackspacecloud.com/v2.0/
 # working.
 export OS_TENANT_ID=" "
 # export OS_TENANT_NAME="service"
+export OS_TENANT_NAME=" "
 
 # In addition to the owning entity (tenant), openstack stores the entity
 # performing the action as the **user**.
@@ -208,4 +215,4 @@ export PATH=$PATH:$HOME/.rbenv/bin:/home/vagrant/.rbenv/shims:/home/vagrant/.rbe
 OPENSTACK
 
 chown vagrant:vagrant /home/vagrant/openstackrc
-
+/etc/init.d/vboxadd setup
