@@ -32,8 +32,19 @@
         }
     ],
     "provisioners": [
+        {
+          "type": "file",
+          "source": "openstackrc.sh",
+          "destination": "/tmp"
+        },
+        {
+          "type": "file",
+          "source": "openstack_cli_functions.sh",
+          "destination": "/tmp"
+        },
         { "type" : "shell",
-          "script" : "/Users/john6735/Box/sandbox/packer-openstack-client/load-openstackclient.sh" }
+          "script" : "/Users/john6735/Box/sandbox/packer-openstack-client/load-openstackclient.sh"
+        }
     ],
     "post-processors": ["vagrant"]
 }
