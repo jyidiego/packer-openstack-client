@@ -25,6 +25,7 @@ pip install python-heatclient
 pip install python-cinderclient
 pip install python-keystoneclient
 pip install python-troveclient
+pip install python-neutronclient
 pip install pyrax
 pip install ansible
 git clone https://github.com/calebgroom/clb.git $HOME/clb;cd $HOME/clb;python setup.py install
