@@ -4,6 +4,7 @@ apt-get -y update
 apt-get -y install curl build-essential libxml2-dev libxslt-dev git zlib1g-dev libssl-dev subversion
 apt-get -y install linux-headers-generic linux-image-extra-`uname -r`
 apt-get -y install python openssh-server python-dev software-properties-common ipython
+apt-get -y install openjdk-7-jdk maven
 
 #
 # Setup ssh keys for root
@@ -28,13 +29,18 @@ pip install python-troveclient
 pip install python-neutronclient
 pip install pyrax
 pip install ansible
-git clone https://github.com/calebgroom/clb.git $HOME/clb;cd $HOME/clb;python setup.py install
+pip install supernova
+git clone https://github.com/rackerlabs/python-cloudlb.git $HOME/cloudlb;cd $HOME/cloudlb;python setup.py install;cd $HOME
+git clone https://github.com/jyidiego/clb.git $HOME/clb;cd $HOME/clb;python setup.py install;cd $HOME
+chmod -R 544 /usr/local/lib/python2.7/dist-packages/python_dateutil-2.1-py2.7.egg/EGG-INFO/* # needed because perms are screwed.
+rm -rf $HOME/clb $HOME/cloudlb
 
 #
 # Install chef client and knife
 #
-curl -L https://www.opscode.com/chef/install.sh | sudo bash
-/opt/chef/embedded/bin/gem --no-rdoc --no-ri knife-rackspace
+# curl -L https://www.opscode.com/chef/install.sh | sudo bash
+dpkg -i /tmp/chef_11.6.0-1.ubuntu.12.04_amd64.deb
+/opt/chef/embedded/bin/gem install --no-rdoc --no-ri knife-rackspace
 
 #
 # Create modified sudoers file
@@ -82,11 +88,12 @@ cat <<EOF > /etc/motd.tail
  and command line utilities:
 
  Version Control Tools: git, subversion
- Automation Tools: ansible, chef-client, chef-solo, juju
+ Automation Tools: ansible, chef-client/chef-solo/knife, juju
  Python: pyrax, nova, swift, clb, heat, keystone, cinder, neutron, and trove
  Ruby: fog, rumm
+ Java: openjdk7, maven, jclouds
 
- RUN THIS COMMAND TO START: source openstackrc
+ RUN THIS COMMAND TO START: source openstackrc.sh
 EOF
 
 #
@@ -158,8 +165,17 @@ apt-get -y install juju-core
 # copy and set permissions for openstack rc file
 #
 cp /tmp/openstackrc.sh /home/vagrant
-cp /tmp/openstack_cli_functions.sh /home/vagrant
-chown vagrant:vagrant /home/vagrant/openstackrc.sh /home/vagrant/openstack_cli_functions.sh
+cp /tmp/.openstack_cli_functions.sh /home/vagrant
+mkdir /home/vagrant/.chef
+cp /tmp/knife.rb /home/vagrant/.chef
+chown vagrant:vagrant /home/vagrant/openstackrc.sh /home/vagrant/.openstack_cli_functions.sh
+chown -R vagrant:vagrant /home/vagrant/.chef
+
+#
+# install jclouds development starter kit
+#
+(cd /home/vagrant;tar xvzf /tmp/jclouds.tgz)
+chown -R vagrant:vagrant /home/vagrant/jclouds
 
 #
 # Redo the vbox additions

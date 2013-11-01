@@ -34,13 +34,28 @@
     "provisioners": [
         {
           "type": "file",
-          "source": "openstackrc.sh",
-          "destination": "/tmp"
+          "source": "knife.rb",
+          "destination": "/tmp/knife.rb"
         },
         {
           "type": "file",
-          "source": "openstack_cli_functions.sh",
-          "destination": "/tmp"
+          "source": "chef_11.6.0-1.ubuntu.12.04_amd64.deb",
+          "destination": "/tmp/chef_11.6.0-1.ubuntu.12.04_amd64.deb"
+        },
+        {
+          "type": "file",
+          "source": "openstackrc.sh",
+          "destination": "/tmp/openstackrc.sh"
+        },
+        {
+          "type": "file",
+          "source": ".openstack_cli_functions.sh",
+          "destination": "/tmp/.openstack_cli_functions.sh"
+        },
+        {
+          "type": "file",
+          "source": "jclouds.tgz",
+          "destination": "/tmp/jclouds.tgz"
         },
         { "type" : "shell",
           "script" : "/Users/john6735/Box/sandbox/packer-openstack-client/load-openstackclient.sh"
