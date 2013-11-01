@@ -14,7 +14,9 @@ vagrant init rax_workstation http://rax.io/rax_workstation.box
 
 This virtualbox contains pretty much all of the Rackspace Pulic Cloud SDKs (Java, Python, Ruby) and command line tools. As our cloud is based on OpenStack you can also configure it to work with your private OpenStack cloud. The platform is an attempt at making it easier to kick the tires of the Rackspace Cloud APIs. It also has Ansible, heat (OpenStack Orchestration) and the rackspace knife plugin installed to try different configuration tools out. Once you login (via vagrant ssh) you source the openstackrc.sh:
 
+```
 source openstackrc.sh
+```
 
 And it will give you the following prompts:
 ```
